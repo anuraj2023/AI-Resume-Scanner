@@ -110,9 +110,6 @@ class SelfQueryRetriever(RAGRetriever):
       print("In retrieve_matching_applicant_by_jd")
       """Retrieve similar resumes given a job description"""
       subquestion_list = [job_description]
-
-      # if rag_mode == "RAG Fusion":
-      #   subquestion_list += llm.generate_subquestions(question)
         
       self.meta_data["subquestion_list"] = subquestion_list
       retrieved_ids = self.retrieve_id_and_rerank(subquestion_list)

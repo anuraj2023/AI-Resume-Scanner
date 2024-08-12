@@ -141,4 +141,4 @@ def extract_text_from_docx(docx_file):
     return "\n".join([paragraph.text for paragraph in doc.paragraphs])
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8080)

@@ -9,3 +9,11 @@ __pycache__
 app/__pycache__
 
 logs/
+
+volumes/
+
+embedEtcd.yaml
+
+user.yaml
+
+standalone_embed.sh
