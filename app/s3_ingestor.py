@@ -16,11 +16,7 @@ s3_client = boto3.client('s3',
 
 def upload_to_s3(file, bucket, s3_file):
     try:
-        print("file : ", file)
-        print("bucket : ", bucket)
-        print("s3_file : ", s3_file)
-        res = s3_client.upload_fileobj(file, bucket, s3_file)
-        print("res is : ", res)
+        s3_client.upload_fileobj(file, bucket, s3_file)
         encoded_s3_file = quote(s3_file)
         s3_url = f"https://{bucket}.s3.{AWS_REGION}.amazonaws.com/{encoded_s3_file}"
         

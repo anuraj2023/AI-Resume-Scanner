@@ -1,0 +1,33 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider             = "prisma-client-py"
+  recursive_type_depth = 5
+}
+
+model Candidate {
+  id                      String   @id @default(uuid())
+  name                    String
+  phoneNumber             String?
+  linkedinUrl             String?
+  emailId                 String?
+  uploadResumeUrl         String
+  totalWorkExperience     String?
+  qualifiedForInterview   Boolean
+  interviewMailSent       Boolean
+  matchingSkillsAsPerJd   String[]
+  fitmentMatchScore       Int
+  workflowId              String
+}
+
+model Workflow {
+  id                    String     @id @default(uuid())
+  name                  String
+  jobDescription        String
+  jobDescriptionUrl     String
+  additionalParameters  String[]
+  candidates            String[]
+}

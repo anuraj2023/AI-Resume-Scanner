@@ -35,7 +35,6 @@ class RAGRetriever():
 
 
   def reciprocal_rank_fusion(self, document_rank_list: list[dict], k=50):
-    print("document_rank_list is : ", document_rank_list)
     fused_scores = {}
     for doc_list in document_rank_list:
       for rank, (doc, _) in enumerate(doc_list.items()):
@@ -47,11 +46,8 @@ class RAGRetriever():
 
 
   def retrieve_docs_id(self, question: str, k: int):
-    print("question is : ", question)
     docs_score = self.vectorstore.similarity_search_with_score(question, k=k)
-    print("docs_score file length is : ", len(docs_score))
     docs_score = {str(doc.metadata["ID"]): score for doc, score in docs_score}
-    print("docs_score is : ", docs_score)
     return docs_score
   
 
@@ -60,7 +56,6 @@ class RAGRetriever():
     for subquestion in subquestion_list:
       document_rank_list.append(self.retrieve_docs_id(subquestion, RAG_K_THRESHOLD))
     reranked_documents = self.reciprocal_rank_fusion(document_rank_list)
-    print("reranked_documents is : ", reranked_documents)
     return reranked_documents
 
 
@@ -113,7 +108,6 @@ class SelfQueryRetriever(RAGRetriever):
         
       self.meta_data["subquestion_list"] = subquestion_list
       retrieved_ids = self.retrieve_id_and_rerank(subquestion_list)
-      print("retrieved_ids is : ", retrieved_ids)
       self.meta_data["retrieved_docs_with_scores"] = retrieved_ids
       retrieved_resumes = self.retrieve_documents_with_id(retrieved_ids)
       return retrieved_resumes
@@ -121,23 +115,17 @@ class SelfQueryRetriever(RAGRetriever):
     def router(response):
       if isinstance(response, AgentFinish):
         return response.return_values["output"]
-      else:
-        print("Inside else part of router method")
+      else: 
         toolbox = {
           "retrieve_applicant_id": retrieve_applicant_id,
           "retrieve_matching_applicant_by_jd": retrieve_matching_applicant_by_jd
         }
         self.meta_data["query_type"] = response.tool # which tool was used 
         self.meta_data["extracted_input"] = response.tool_input # what input was provided to the tool
-        print("before executing tool")
         return toolbox[response.tool].run(response.tool_input)
 
-    print("In retrieve_docs")  
     self.meta_data["rag_mode"] = rag_mode
     llm_func_call = llm.llm.bind(functions=[format_tool_to_openai_function(tool) for tool in [retrieve_applicant_id, retrieve_matching_applicant_by_jd]])
-    print("After LLM bind")
     chain = self.prompt | llm_func_call | OpenAIFunctionsAgentOutputParser() | router
-    print("chain formed")
     result = chain.invoke({"input": question})
-    print("result is : ", len(result))
     return result

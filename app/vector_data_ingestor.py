@@ -5,6 +5,11 @@ from langchain_community.document_loaders import DataFrameLoader
 from tqdm import tqdm
 import logging
 from pymilvus import connections
+from config import get_env_vars
+
+env_vars = get_env_vars()
+MILVUS_DB_HOST = env_vars['MILVUS_DB_HOST']
+MILVUS_DB_PORT = env_vars['MILVUS_DB_PORT']
 
 logging.basicConfig(level=logging.INFO)
 
@@ -37,7 +42,7 @@ def ingest(df: pd.DataFrame, content_column: str, embedding_model, batch_size: i
             raise ValueError("No document chunks were created. Please check your text splitter settings.")
 
         # Connect to Milvus
-        connections.connect("default", host="localhost", port="19530")
+        connections.connect("default", host=MILVUS_DB_PORT, port=MILVUS_DB_PORT)
 
         # Initialize Milvus with the first batch
         first_batch = document_chunks[:batch_size]
@@ -45,7 +50,7 @@ def ingest(df: pd.DataFrame, content_column: str, embedding_model, batch_size: i
             first_batch,
             embedding_model,
             collection_name="resume_collection",
-            connection_args={"host": "localhost", "port": "19530"}
+            connection_args={"host": MILVUS_DB_HOST, "port": MILVUS_DB_PORT}
         )
 
         # Add remaining documents in batches
