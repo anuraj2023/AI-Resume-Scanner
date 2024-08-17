@@ -13,3 +13,4 @@ langchain-openai==0.1.21
 langchain_huggingface==0.0.3
 faiss-cpu==1.8.0.post1
 pymilvus==2.4.5
+websockets==12.0
