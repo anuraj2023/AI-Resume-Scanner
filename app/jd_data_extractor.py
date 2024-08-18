@@ -1,9 +1,6 @@
-import logging
 from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
-from langchain.schema.runnable import RunnablePassthrough
 from langchain_core.output_parsers.string import StrOutputParser
-from langchain.output_parsers.json import SimpleJsonOutputParser
 from app.jd_structure import jd_structure
 from app.logging_config import logger
 

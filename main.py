@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import resume, job_description, candidate, workflow, chat
-from config import get_env_vars
+from app.routes import resume, job_description, candidate, workflow
 from contextlib import asynccontextmanager
 from app.prisma import prisma
 
