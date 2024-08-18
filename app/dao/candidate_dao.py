@@ -1,3 +1,4 @@
+import json
 from prisma.models import Candidate
 from typing import List, Optional
 
@@ -6,6 +7,8 @@ class CandidateDAO:
         self.db = db
 
     async def create_candidate(self, data: dict) -> Candidate:
+        if 'parsedResume' in data and isinstance(data['parsedResume'], dict):
+            data['parsedResume'] = json.dumps(data['parsedResume'])
         return await self.db.candidate.create(data=data)
 
     async def get_candidate(self, candidate_id: str) -> Optional[Candidate]:

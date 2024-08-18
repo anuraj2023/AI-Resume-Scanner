@@ -21,6 +21,7 @@ model Candidate {
   matchingSkillsAsPerJd   String[]
   fitmentMatchScore       Int
   workflowId              String   @db.ObjectId
+  parsedResume            Json
 }
 
 model Workflow {

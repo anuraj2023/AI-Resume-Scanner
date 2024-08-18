@@ -1,5 +1,6 @@
+from prisma import Json
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 class CandidateBase(BaseModel):
     name: str
@@ -12,6 +13,7 @@ class CandidateBase(BaseModel):
     interviewMailSent: bool
     matchingSkillsAsPerJd: List[str]
     fitmentMatchScore: int
+    parsedResume: Dict[str, Any]
 
 class CandidateCreate(CandidateBase):
     workflowId: str

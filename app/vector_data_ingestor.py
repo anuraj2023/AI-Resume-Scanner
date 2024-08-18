@@ -3,24 +3,22 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Milvus
 from langchain_community.document_loaders import DataFrameLoader
 from tqdm import tqdm
-import logging
 from pymilvus import connections
 from config import get_env_vars
+from app.logging_config import logger
 
 env_vars = get_env_vars()
 MILVUS_URI = env_vars['MILVUS_URI']
 MILVUS_API_KEY = env_vars['MILVUS_API_KEY'] 
-
-logging.basicConfig(level=logging.INFO)
 
 def ingest(df: pd.DataFrame, content_column: str, embedding_model, batch_size: int = 1000):
     try:
         if content_column not in df.columns:
             raise ValueError(f"Column '{content_column}' not found in DataFrame")
 
-        logging.info(f"DataFrame shape: {df.shape}")
-        logging.info(f"Columns: {df.columns.tolist()}")
-        logging.info(f"Sample data from '{content_column}': {df[content_column].head()}")
+        logger.info(f"DataFrame shape: {df.shape}")
+        logger.info(f"Columns: {df.columns.tolist()}")
+        logger.info(f"Sample data from '{content_column}': {df[content_column].head()}")
 
         loader = DataFrameLoader(df, page_content_column=content_column)
 
@@ -30,13 +28,13 @@ def ingest(df: pd.DataFrame, content_column: str, embedding_model, batch_size: i
             length_function=len
         )
         documents = loader.load()
-        logging.info(f"Number of documents loaded: {len(documents)}")
+        logger.info(f"Number of documents loaded: {len(documents)}")
 
         if not documents:
             raise ValueError("No documents were loaded. Please check your DataFrame and content column.")
 
         document_chunks = text_splitter.split_documents(documents)
-        logging.info(f"Number of document chunks: {len(document_chunks)}")
+        logger.info(f"Number of document chunks: {len(document_chunks)}")
 
         if not document_chunks:
             raise ValueError("No document chunks were created. Please check your text splitter settings.")
@@ -66,15 +64,15 @@ def ingest(df: pd.DataFrame, content_column: str, embedding_model, batch_size: i
             try:
                 vectorstore_db.add_documents(batch)
             except Exception as e:
-                logging.error(f"Error adding batch {i//batch_size + 1}: {str(e)}")
-                logging.error(f"Problematic batch: {batch}")
+                logger.error(f"Error adding batch {i//batch_size + 1}: {str(e)}")
+                logger.error(f"Problematic batch: {batch}")
                 raise
 
-        logging.info("Ingestion completed successfully")
+        logger.info("Ingestion completed successfully")
         return vectorstore_db
 
     except Exception as e:
-        logging.error(f"Error during ingestion: {str(e)}")
+        logger.error(f"Error during ingestion: {str(e)}")
         raise
     finally:
         # Disconnect from Milvus
