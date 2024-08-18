@@ -1,8 +1,11 @@
 ## Use hosted Milvus DB and update the below env variables 
 
 MILVUS_URI= <br/>
-MILVUS_API_KEY=
+MILVUS_API_KEY=<br/>
 
+## Use hosted Mongo DB and update the below env var
+
+DATABASE_URL=
 
 ## Visualise milvus
 
