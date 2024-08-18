@@ -1,3 +1,11 @@
+## Create virtual environment
+
+python -m venv venv
+
+## Install the dependencies
+
+pip install -r requirements.txt
+
 ## Use hosted Milvus DB and update the below env variables 
 
 MILVUS_URI= <br/>
