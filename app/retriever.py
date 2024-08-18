@@ -102,7 +102,6 @@ class SelfQueryRetriever(RAGRetriever):
 
     @tool(args_schema=JobDescription)
     def retrieve_matching_applicant_by_jd(job_description: str):
-      print("In retrieve_matching_applicant_by_jd")
       """Retrieve similar resumes given a job description"""
       subquestion_list = [job_description]
         

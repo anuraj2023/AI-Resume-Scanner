@@ -28,7 +28,6 @@ def upload_to_s3(file, bucket, s3_file):
         logger.error("AWS credentials not available")
         return False, None
     except ClientError as e:
-        print("Error occured while uploading to S3: ", e)
         error_code = e.response['Error']['Code']
         error_message = e.response['Error']['Message']
         logger.error(f"ClientError uploading to S3: {error_code} - {error_message}")

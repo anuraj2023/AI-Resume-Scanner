@@ -43,7 +43,6 @@ async def upload_resumes(files: List[UploadFile] = File(...)):
         # Upload to VectorDB
         df = pd.DataFrame(df_list)
         vectordb = ingest(df, "Content", embedding_model)
-        print("Data ingested successfully to vector db")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error ingesting data to vector database: {str(e)}")
 
@@ -51,10 +50,8 @@ async def upload_resumes(files: List[UploadFile] = File(...)):
         # Extract data in JSON form resume using LLM
         llm = ChatOpenAI(temperature=0, model_name="gpt-4o-mini", api_key=OPEN_AI_KEY)
         json_resume_list = extract_resume_data(df_list, llm)
-        print("extracted JSON resume_list length is: ", len(json_resume_list))
+        # Save the extracted JSON resume data to postgreSQL candidate table
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error extracting resume data: {str(e)}")
-
-    # Save the extracted JSON resume data to postgreSQL candidate table
 
     return {"message": f"Successfully processed {len(df_list)} resume files."}

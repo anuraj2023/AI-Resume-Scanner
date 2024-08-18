@@ -9,8 +9,8 @@ AWS_SECRET_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 S3_BUCKET_NAME = os.getenv('S3_BUCKET_NAME')
 AWS_REGION = os.getenv('AWS_REGION')
 TIKA_SERVER_URL = os.getenv('TIKA_SERVER_URL')
-MILVUS_DB_HOST = os.getenv('MILVUS_DB_HOST')
-MILVUS_DB_PORT = os.getenv('MILVUS_DB_PORT')
+MILVUS_URI = os.getenv('MILVUS_URI')
+MILVUS_API_KEY = os.getenv('MILVUS_API_KEY')
 
 
 def get_env_vars():
@@ -21,6 +21,6 @@ def get_env_vars():
         'S3_BUCKET_NAME': S3_BUCKET_NAME,
         'AWS_REGION' : AWS_REGION,
         'TIKA_SERVER_URL': TIKA_SERVER_URL,
-        'MILVUS_DB_HOST': MILVUS_DB_HOST,
-        'MILVUS_DB_PORT': MILVUS_DB_PORT
+        'MILVUS_URI': MILVUS_URI,
+        'MILVUS_API_KEY': MILVUS_API_KEY
     }
