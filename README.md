@@ -8,6 +8,9 @@ MILVUS_API_KEY=
 
 You can use ziliz cloud vector DB vidualizer to view the contents
 
+<img width="1485" alt="image" src="https://github.com/user-attachments/assets/ed73f89e-d52d-426f-88d2-fcfdde74e6b1">
+
+
 ## Setting up tika ( document parser )
 
 docker pull apache/tika <br/>
