@@ -9,7 +9,7 @@ candidate_dao = CandidateDAO(prisma)
 
 @router.post("/candidates/", response_model=CandidateResponse)
 async def create_candidate(candidate: CandidateCreate):
-    return await candidate_dao.create_candidate(candidate.dict())
+    return await candidate_dao.create_candidate(candidate.model_dump())
 
 @router.get("/candidates/{candidate_id}", response_model=CandidateResponse)
 async def read_candidate(candidate_id: str):
@@ -20,7 +20,7 @@ async def read_candidate(candidate_id: str):
 
 @router.put("/candidates/{candidate_id}", response_model=CandidateResponse)
 async def update_candidate(candidate_id: str, candidate: CandidateCreate):
-    updated_candidate = await candidate_dao.update_candidate(candidate_id, candidate.dict())
+    updated_candidate = await candidate_dao.update_candidate(candidate_id, candidate.model_dump())
     if updated_candidate is None:
         raise HTTPException(status_code=404, detail="Candidate not found")
     return updated_candidate
@@ -35,3 +35,10 @@ async def delete_candidate(candidate_id: str):
 @router.get("/candidates/", response_model=List[CandidateResponse])
 async def read_all_candidates():
     return await candidate_dao.get_all_candidates()
+
+@router.get("/workflows/{workflow_id}/candidates", response_model=List[CandidateResponse])
+async def get_candidates_by_workflow_id(workflow_id: str):
+    candidates = await candidate_dao.get_candidates_by_workflow_id(workflow_id)
+    if not candidates:
+        raise HTTPException(status_code=404, detail="No candidates found for this workflow")
+    return candidates

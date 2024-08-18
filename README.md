@@ -19,9 +19,9 @@ To check attu running, go here - http://localhost:8000 and login using your loca
 
 ## Setting up tika ( document parser )
 
-docker pull apache/tika
-docker run -d -p 127.0.0.1:9998:9998 apache/tika
-Set environment variable for Tika 
+docker pull apache/tika <br/>
+docker run -d -p 127.0.0.1:9998:9998 apache/tika <br/>
+Set environment variable for Tika <br/>
 TIKA_SERVER_URL = 'http://localhost:9998/tika'
 
 ## Setting up prisma

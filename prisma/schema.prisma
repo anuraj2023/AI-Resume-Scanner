@@ -1,5 +1,5 @@
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
@@ -9,7 +9,7 @@ generator client {
 }
 
 model Candidate {
-  id                      String   @id @default(uuid())
+  id                      String   @id @default(auto()) @map("_id") @db.ObjectId
   name                    String
   phoneNumber             String?
   linkedinUrl             String?
@@ -20,14 +20,13 @@ model Candidate {
   interviewMailSent       Boolean
   matchingSkillsAsPerJd   String[]
   fitmentMatchScore       Int
-  workflowId              String
+  workflowId              String   @db.ObjectId
 }
 
 model Workflow {
-  id                    String     @id @default(uuid())
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
   name                  String
   jobDescription        String
   jobDescriptionUrl     String
   additionalParameters  String[]
-  candidates            String[]
 }

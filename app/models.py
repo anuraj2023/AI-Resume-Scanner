@@ -1,10 +1,10 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional
 
-class CandidateCreate(BaseModel):
+class CandidateBase(BaseModel):
     name: str
     phoneNumber: str
-    linkedinUrl: Optional[str]
+    linkedinUrl: Optional[str] = None
     emailId: str
     uploadResumeUrl: str
     totalWorkExperience: str
@@ -12,6 +12,12 @@ class CandidateCreate(BaseModel):
     interviewMailSent: bool
     matchingSkillsAsPerJd: List[str]
     fitmentMatchScore: int
+
+class CandidateCreate(CandidateBase):
+    workflowId: str
+
+class CandidateResponse(CandidateBase):
+    id: str
     workflowId: str
 
 class WorkflowCreate(BaseModel):
@@ -19,15 +25,13 @@ class WorkflowCreate(BaseModel):
     jobDescription: str
     jobDescriptionUrl: str
     additionalParameters: List[str]
-    candidates: List[str]
 
-
-class CandidateResponse(CandidateCreate):
+class WorkflowResponse(BaseModel):
     id: str
-
-class WorkflowResponse(WorkflowCreate):
-    id: str
-    candidates: List[str]
+    name: str
+    jobDescription: str
+    jobDescriptionUrl: str
+    additionalParameters: List[str]
 
 class ChatMessage(BaseModel):
     role: str
