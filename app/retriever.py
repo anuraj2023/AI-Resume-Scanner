@@ -29,9 +29,8 @@ class JobDescription(BaseModel):
 
 
 class RAGRetriever():
-  def __init__(self, vectorstore_db, df):
+  def __init__(self, vectorstore_db):
     self.vectorstore = vectorstore_db
-    self.df = df
 
 
   def reciprocal_rank_fusion(self, document_rank_list: list[dict], k=50):
@@ -70,8 +69,8 @@ class RAGRetriever():
 
 
 class SelfQueryRetriever(RAGRetriever):
-  def __init__(self, vectorstore_db, df):
-    super().__init__(vectorstore_db, df)
+  def __init__(self, vectorstore_db):
+    super().__init__(vectorstore_db)
 
     self.prompt = ChatPromptTemplate.from_messages([
       ("system", "You are an expert in talent acquisition."),

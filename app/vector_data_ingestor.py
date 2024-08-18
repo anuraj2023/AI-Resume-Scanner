@@ -3,7 +3,8 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Milvus
 from langchain_community.document_loaders import DataFrameLoader
 from tqdm import tqdm
-from pymilvus import connections
+# from pymilvus import connections
+#from app.milvus import connections
 from config import get_env_vars
 from app.logging_config import logger
 
@@ -40,11 +41,11 @@ def ingest(df: pd.DataFrame, content_column: str, embedding_model, batch_size: i
             raise ValueError("No document chunks were created. Please check your text splitter settings.")
 
         # Connect to hosted Milvus
-        connections.connect(
-            alias="default", 
-            uri=MILVUS_URI,
-            token=MILVUS_API_KEY
-        )
+        # connections.connect(
+        #     alias="default", 
+        #     uri=MILVUS_URI,
+        #     token=MILVUS_API_KEY
+        # )
 
         # Initialize Milvus with the first batch
         first_batch = document_chunks[:batch_size]
@@ -75,5 +76,6 @@ def ingest(df: pd.DataFrame, content_column: str, embedding_model, batch_size: i
         logger.error(f"Error during ingestion: {str(e)}")
         raise
     finally:
+        pass
         # Disconnect from Milvus
-        connections.disconnect("default")
+        #connections.disconnect("default")

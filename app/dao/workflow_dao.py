@@ -25,9 +25,7 @@ class WorkflowDAO:
         return await self.db.workflow.update(where={"id": workflow_id}, data=data)
 
     async def delete_workflow(self, workflow_id: str) -> Workflow:
-        # First, delete all associated candidates
         await self.db.candidate.delete_many(where={"workflowId": workflow_id})
-        # Then delete the workflow
         return await self.db.workflow.delete(where={"id": workflow_id})
 
     async def get_all_workflows_with_candidates(self) -> List[Dict[str, Any]]:

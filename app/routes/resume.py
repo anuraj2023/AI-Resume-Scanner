@@ -19,8 +19,8 @@ router = APIRouter()
 env_vars = get_env_vars()
 OPEN_AI_KEY = env_vars['OPEN_AI_KEY']
 S3_BUCKET_NAME = env_vars['S3_BUCKET_NAME']
+EMBEDDING_MODEL = env_vars['EMBEDDING_MODEL']
 
-EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 embedding_model = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL, model_kwargs={"device": "cpu"})
 
 candidate_dao = CandidateDAO(prisma)

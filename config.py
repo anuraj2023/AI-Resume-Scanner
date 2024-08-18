@@ -11,6 +11,7 @@ AWS_REGION = os.getenv('AWS_REGION')
 TIKA_SERVER_URL = os.getenv('TIKA_SERVER_URL')
 MILVUS_URI = os.getenv('MILVUS_URI')
 MILVUS_API_KEY = os.getenv('MILVUS_API_KEY')
+EMBEDDING_MODEL = os.getenv('EMBEDDING_MODEL')
 
 
 def get_env_vars():
@@ -22,5 +23,6 @@ def get_env_vars():
         'AWS_REGION' : AWS_REGION,
         'TIKA_SERVER_URL': TIKA_SERVER_URL,
         'MILVUS_URI': MILVUS_URI,
-        'MILVUS_API_KEY': MILVUS_API_KEY
+        'MILVUS_API_KEY': MILVUS_API_KEY,
+        'EMBEDDING_MODEL': EMBEDDING_MODEL
     }

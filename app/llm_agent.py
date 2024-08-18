@@ -2,7 +2,7 @@ import sys
 sys.dont_write_bytecode = True
 
 from langchain_openai.chat_models import ChatOpenAI
-from langchain.schema import HumanMessage, SystemMessage, AIMessage
+from langchain.schema import HumanMessage, SystemMessage
 from langchain.docstore.document import Document
 
 
@@ -47,6 +47,8 @@ class ChatBot():
         Context: {context}
       """)
 
-    stream = self.llm.stream([system_message, user_message])
+    #stream = self.llm.stream([system_message, user_message])
+    stream = self.llm.invoke([system_message, user_message])
+    print("stream is : ", stream)
 
     return stream
