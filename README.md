@@ -1,28 +1,21 @@
-## Install Milvus in Docker
+## Use hosted Milvus DB and update the below env variables 
 
-curl -sfL https://raw.githubusercontent.com/milvus-io/milvus/master/scripts/standalone_embed.sh -o standalone_embed.sh
+MILVUS_URI= <br/>
+MILVUS_API_KEY=
 
-bash standalone_embed.sh start
-
-## Stop and delete milvus
-
-bash standalone_embed.sh stop
-
-bash standalone_embed.sh delete
 
 ## Visualise milvus
 
-docker run -p 8000:3000 -e MILVUS_URL={your local IP address}:19530 zilliz/attu:v2.4
-IP address should not be - localhost/127.0.0.1/0.0.0.0
-Find out the local ip address using - ipconfig getifaddr en0
-To check attu running, go here - http://localhost:8000 and login using your local IP address
+You can use ziliz cloud vector DB vidualizer to view the contents
 
 ## Setting up tika ( document parser )
 
 docker pull apache/tika <br/>
 docker run -d -p 127.0.0.1:9998:9998 apache/tika <br/>
 Set environment variable for Tika <br/>
-TIKA_SERVER_URL = 'http://localhost:9998/tika'
+TIKA_SERVER_URL = 'http://localhost:9998/tika'<br/><br/>
+
+Note: Prefer to use a hosted one
 
 ## Setting up prisma
 
