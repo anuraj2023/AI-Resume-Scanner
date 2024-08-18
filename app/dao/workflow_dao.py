@@ -6,6 +6,7 @@ class WorkflowDAO:
         self.db = db
 
     async def create_workflow(self, data: dict) -> Workflow:
+        print("data is : ", data)
         return await self.db.workflow.create(data=data)
 
     async def get_workflow_with_candidates(self, workflow_id: str) -> Optional[Dict[str, Any]]:

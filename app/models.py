@@ -24,7 +24,7 @@ class WorkflowCreate(BaseModel):
     name: str
     jobDescription: str
     jobDescriptionUrl: str
-    additionalParameters: List[str]
+    additionalParameters: Optional[List[str]] = []
 
 class WorkflowResponse(BaseModel):
     id: str
